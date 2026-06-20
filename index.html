@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoForest Tools - Especialización 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0f4c2f 0%, #1a5f3f 50%, #0d3b26 100%);
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header con urgencia */
+        .alert-banner {
+            background: linear-gradient(135deg, #ff6b2c 0%, #ff8c3a 100%);
+            color: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(255, 107, 44, 0.3);
+            text-align: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 4px 12px rgba(255, 107, 44, 0.3); }
+            50% { box-shadow: 0 4px 20px rgba(255, 107, 44, 0.6); }
+        }
+
+        .alert-banner h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .alert-banner p {
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+        .countdown {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.25);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            margin-top: 8px;
+            font-size: 13px;
+        }
+
+        /* Tarjeta principal */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .course-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: #0f4c2f;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .course-subtitle {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #e8f0ed;
+        }
+
+        /* Grid de detalles */
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .detail-item {
+            background: #f5f9f7;
+            padding: 16px;
+            border-radius: 8px;
+            border-left: 4px solid #1a8f4f;
+        }
+
+        .detail-item.highlight {
+            border-left-color: #ff6b2c;
+            background: #fff8f5;
+        }
+
+        .detail-icon {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .detail-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        /* Precio */
+        .pricing-section {
+            background: linear-gradient(135deg, #1a8f4f 0%, #0f4c2f 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .pricing-label {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .price-main {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .price-original {
+            font-size: 14px;
+            opacity: 0.8;
+            text-decoration: line-through;
+            margin-bottom: 12px;
+        }
+
+        .discount-badge {
+            display: inline-block;
+            background: #ff6b2c;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Vacantes */
+        .vacancies {
+            background: #fff8f5;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            border: 2px solid #ff6b2c;
+        }
+
+        .vacancy-label {
+            font-size: 12px;
+            color: #ff6b2c;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .vacancy-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ff6b2c;
+        }
+
+        .vacancy-text {
+            font-size: 13px;
+            color: #666;
+            margin-top: 4px;
+        }
+
+        /* Características */
+        .features {
+            margin-bottom: 24px;
+        }
+
+        .features-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0f4c2f;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            font-size: 14px;
+            color: #333;
+            padding-left: 24px;
+            position: relative;
+        }
+
+        .feature-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #1a8f4f;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Módulos del temario */
+        .module-item {
+            background: #f5f9f7;
+            border-left: 4px solid #1a8f4f;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .module-number {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #1a8f4f 0%, #0f4c2f 100%);
+            color: white;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .module-number:has-text("+") {
+            background: linear-gradient(135deg, #ff6b2c 0%, #ff8c3a 100%);
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .module-complementary {
+            border-left-color: #ff6b2c !important;
+            background: linear-gradient(135deg, #fff8f5 0%, #fff0ea 100%) !important;
+        }
+
+        .module-plus {
+            background: linear-gradient(135deg, #ff6b2c 0%, #ff8c3a 100%) !important;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .module-title {
+            font-weight: 600;
+            color: #0f4c2f;
+            font-size: 15px;
+        }
+
+        .module-tools {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tool-badge {
+            display: inline-block;
+            background: white;
+            color: #0f4c2f;
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            border: 1px solid #1a8f4f;
+            white-space: nowrap;
+        }
+
+        .course-outcome {
+            background: linear-gradient(135deg, #fff8f5 0%, #fff0ea 100%);
+            border: 2px solid #ff6b2c;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 16px;
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .course-outcome strong {
+            color: #ff6b2c;
+        }
+
+        /* Testimonios */
+        .testimonials-section {
+            margin: 28px 0;
+            padding-top: 24px;
+            border-top: 2px solid #e8f0ed;
+        }
+
+        .testimonial-item {
+            background: linear-gradient(135deg, #f5f9f7 0%, #eef7f3 100%);
+            border-left: 4px solid #1a8f4f;
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .testimonial-header {
+            flex: 1;
+        }
+
+        .testimonial-header p {
+            margin: 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .testimonial-header p:first-child {
+            color: #0f4c2f;
+            font-weight: 600;
+        }
+
+        .testimonial-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+            opacity: 0.7;
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: block;
+            background: linear-gradient(135deg, #1a8f4f 0%, #0f4c2f 100%);
+            color: white;
+            padding: 16px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(15, 76, 47, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(15, 76, 47, 0.4);
+            background: linear-gradient(135deg, #0f4c2f 0%, #062d1f 100%);
+        }
+
+        .cta-button:active {
+            transform: translateY(0);
+        }
+
+        /* Footer CTA */
+        .footer-cta {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .whatsapp-button {
+            display: inline-block;
+            background: #25d366;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .whatsapp-button:hover {
+            background: #1ca752;
+        }
+
+        /* Responsive */
+        @media (max-width: 500px) {
+            .card {
+                padding: 20px;
+            }
+
+            .course-title {
+                font-size: 24px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .price-main {
+                font-size: 32px;
+            }
+
+            .alert-banner {
+                padding: 12px;
+            }
+
+            .alert-banner h2 {
+                font-size: 16px;
+            }
+        }
+
+        /* Fade in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .alert-banner {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Trust indicators */
+        .trust-section {
+            background: #f5f9f7;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #666;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .instructor-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .instructor-badge {
+            background: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-weight: 600;
+            color: #0f4c2f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Banner de urgencia -->
+        <div class="alert-banner">
+            <h2>⏰ Últimas vacantes disponibles</h2>
+            <p>Inscripción cierra el 27 de junio</p>
+            <div class="countdown">Faltan 8 días</div>
+        </div>
+
+        <!-- Tarjeta principal -->
+        <div class="card">
+            <h1 class="course-title">Monitoreo Forestal, Biodiversidad y Cambio de Cobertura</h1>
+            <p class="course-subtitle">Especialización con GeoForest Tools en QGIS + Google Earth Engine</p>
+
+            <!-- Grid de detalles -->
+            <div class="details-grid">
+                <div class="detail-item">
+                    <div class="detail-icon">📅</div>
+                    <div class="detail-label">Fechas</div>
+                    <div class="detail-value">1, 2, 3 Julio</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-icon">🕐</div>
+                    <div class="detail-label">Horario</div>
+                    <div class="detail-value">18:00 - 21:00 PE</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-icon">💻</div>
+                    <div class="detail-label">Modalidad</div>
+                    <div class="detail-value">Virtual en vivo</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-icon">📚</div>
+                    <div class="detail-label">Duración</div>
+                    <div class="detail-value">40 horas lectivas</div>
+                </div>
+            </div>
+
+            <!-- Precio especial -->
+            <div class="pricing-section">
+                <div class="pricing-label">Precio de Lanzamiento</div>
+                <div class="price-main">S/ 100 / USD 35</div>
+                <div class="price-original">Precio regular: S/ 200 / USD 70</div>
+                <div class="discount-badge">50% de descuento</div>
+            </div>
+
+            <!-- Vacantes -->
+            <div class="vacancies">
+                <div class="vacancy-label">⚠️ Vacantes Disponibles</div>
+                <div class="vacancy-number">10</div>
+                <div class="vacancy-text">De 30 cupos totales. La demanda es alta.</div>
+            </div>
+
+            <!-- Temario detallado -->
+            <div class="features">
+                <div class="features-title">📋 Temario Detallado (4 Módulos)</div>
+                
+                <div class="module-item">
+                    <div class="module-header">
+                        <span class="module-number">M1</span>
+                        <span class="module-title">Dinámica de Cobertura Terrestre</span>
+                    </div>
+                    <div class="module-tools">
+                        <span class="tool-badge">Dinámica cobertura mundial S2</span>
+                        <span class="tool-badge">MapBiomas cobertura Perú C3</span>
+                        <span class="tool-badge">Cambio global 2000-2020</span>
+                        <span class="tool-badge">Análisis Global Forest Watch</span>
+                    </div>
+                </div>
+
+                <div class="module-item">
+                    <div class="module-header">
+                        <span class="module-number">M2</span>
+                        <span class="module-title">Deforestación, Incendios y Perturbaciones</span>
+                    </div>
+                    <div class="module-tools">
+                        <span class="tool-badge">Monitoreo GEOBOSQUES Perú</span>
+                        <span class="tool-badge">Puntos activos Incendio (FIRMS)</span>
+                        <span class="tool-badge">Monitoreo MapBiomas Incendios</span>
+                        <span class="tool-badge">Áreas Quemadas FireCCI ESA</span>
+                        <span class="tool-badge">Alerta temprana GLAD-L/S2/S1</span>
+                    </div>
+                </div>
+
+                <div class="module-item">
+                    <div class="module-header">
+                        <span class="module-number">M3</span>
+                        <span class="module-title">Altura Forestal y Estructura Vertical</span>
+                    </div>
+                    <div class="module-tools">
+                        <span class="tool-badge">ETH Sentinel2 - Altura 2020</span>
+                        <span class="tool-badge">GEDI L2A - Altura Forestal</span>
+                        <span class="tool-badge">GLAD - Altura Dosel 2000-2020</span>
+                        <span class="tool-badge">Meta 1m - Altura Dosel</span>
+                        <span class="tool-badge">Planet NICFI - Amazonía</span>
+                        <span class="tool-badge">GEDI L2B - Estructura Vertical</span>
+                    </div>
+                </div>
+
+                <div class="module-item">
+                    <div class="module-header">
+                        <span class="module-number">M4</span>
+                        <span class="module-title">Biomasa, Carbono y Biodiversidad</span>
+                    </div>
+                    <div class="module-tools">
+                        <span class="tool-badge">CITREES - Biomasa 100m</span>
+                        <span class="tool-badge">ESA - Biomasa y Carbono 100m</span>
+                        <span class="tool-badge">GEDI L4A AGBD - Densidad aérea</span>
+                        <span class="tool-badge">GEDI L4B - Biomasa Aérea 1km</span>
+                        <span class="tool-badge">GFW - Carbono Flujo 30m</span>
+                        <span class="tool-badge">GBIF - Ocurrencias Especies</span>
+                    </div>
+                </div>
+
+                <div class="module-item module-complementary">
+                    <div class="module-header">
+                        <span class="module-number module-plus">+</span>
+                        <span class="module-title">Herramientas Complementarias</span>
+                    </div>
+                    <div class="module-tools">
+                        <span class="tool-badge">Generador de Reportes Local</span>
+                        <span class="tool-badge">Exportación de gráficos</span>
+                        <span class="tool-badge">Automatización de flujos</span>
+                    </div>
+                </div>
+
+                <div class="course-outcome">
+                    <strong>Dominarás:</strong> 30+ datasets de monitoreo forestal integrados en QGIS • Automatización con GeoForest Tools • Reportes dinámicos con Earth Engine • Análisis multitemporal de cobertura, biomasa y carbono • Identificación de alertas tempranas
+                </div>
+            </div>
+
+            <!-- CTA Principal -->
+            <a href="https://ninobravo55.github.io/geoforest-inscripcion/" class="cta-button">
+                🚀 Inscríbete Ahora
+            </a>
+
+            <!-- Testimonios / Casos de Uso -->
+            <div class="testimonials-section">
+                <div class="features-title">¿Por qué eligen este curso?</div>
+                
+                <div class="testimonial-item">
+                    <div class="testimonial-header">
+                        <div class="testimonial-text">
+                            <p><strong>"Automaticé análisis que antes tomaban 3 semanas en 2 días"</strong></p>
+                            <p style="font-size: 13px; color: #666; margin-top: 4px;">Consultor SIG - Evaluación Ambiental</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-icon">⚡</div>
+                </div>
+
+                <div class="testimonial-item">
+                    <div class="testimonial-header">
+                        <div class="testimonial-text">
+                            <p><strong>"Ahora genero reportes de monitoreo forestal con datos en tiempo real"</strong></p>
+                            <p style="font-size: 13px; color: #666; margin-top: 4px;">Especialista en Hidrología - Proyecto de Agua</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-icon">🌳</div>
+                </div>
+
+                <div class="testimonial-item">
+                    <div class="testimonial-header">
+                        <div class="testimonial-text">
+                            <p><strong>"Entendí cómo integrar Google Earth Engine en mis flujos de trabajo"</strong></p>
+                            <p style="font-size: 13px; color: #666; margin-top: 4px;">Investigador - Universidad</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-icon">🛰️</div>
+                </div>
+            </div>
+
+            <!-- Indicadores de confianza -->
+            <div class="trust-section">
+                <div class="instructor-info">
+                    <span class="instructor-badge">Ing. Nino Bravo Morales</span>
+                </div>
+                <p>Especialista en Geomática y Teledetección con experiencia en proyectos ambientales</p>
+                <p style="margin-top: 8px; font-size: 12px;">✓ Certificado digital verificable</p>
+            </div>
+        </div>
+
+        <!-- Footer con contacto -->
+        <div class="footer-cta">
+            <p style="font-size: 13px; color: white; margin-bottom: 12px;">¿Dudas o preguntas?</p>
+            <a href="https://wa.me/51999999999?text=Hola%20Nino%2C%20me%20interesa%20el%20curso%20de%20GeoForest%20Tools" class="whatsapp-button">
+                💬 Contáctame por WhatsApp
+            </a>
+        </div>
+    </div>
+</body>
+</html>
