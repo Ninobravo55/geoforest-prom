@@ -1,676 +1,450 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GeoForest Tools - Especialización 2026</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #0f4c2f 0%, #1a5f3f 50%, #0d3b26 100%);
-            color: #1a1a1a;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* Header con urgencia */
-        .alert-banner {
-            background: linear-gradient(135deg, #ff6b2c 0%, #ff8c3a 100%);
-            color: white;
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 24px;
-            box-shadow: 0 4px 12px rgba(255, 107, 44, 0.3);
-            text-align: center;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 4px 12px rgba(255, 107, 44, 0.3); }
-            50% { box-shadow: 0 4px 20px rgba(255, 107, 44, 0.6); }
-        }
-
-        .alert-banner h2 {
-            font-size: 18px;
-            margin-bottom: 8px;
-            font-weight: 700;
-        }
-
-        .alert-banner p {
-            font-size: 14px;
-            opacity: 0.95;
-        }
-
-        .countdown {
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.25);
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-weight: 600;
-            margin-top: 8px;
-            font-size: 13px;
-        }
-
-        /* Tarjeta principal */
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 28px;
-            margin-bottom: 20px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-        }
-
-        .course-title {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0f4c2f;
-            margin-bottom: 12px;
-            line-height: 1.3;
-        }
-
-        .course-subtitle {
-            font-size: 15px;
-            color: #666;
-            margin-bottom: 24px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #e8f0ed;
-        }
-
-        /* Grid de detalles */
-        .details-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin-bottom: 24px;
-        }
-
-        .detail-item {
-            background: #f5f9f7;
-            padding: 16px;
-            border-radius: 8px;
-            border-left: 4px solid #1a8f4f;
-        }
-
-        .detail-item.highlight {
-            border-left-color: #ff6b2c;
-            background: #fff8f5;
-        }
-
-        .detail-icon {
-            font-size: 20px;
-            margin-bottom: 8px;
-        }
-
-        .detail-label {
-            font-size: 12px;
-            color: #888;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 4px;
-        }
-
-        .detail-value {
-            font-size: 16px;
-            font-weight: 600;
-            color: #1a1a1a;
-        }
-
-        /* Precio */
-        .pricing-section {
-            background: linear-gradient(135deg, #1a8f4f 0%, #0f4c2f 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 24px;
-            text-align: center;
-        }
-
-        .pricing-label {
-            font-size: 13px;
-            opacity: 0.9;
-            margin-bottom: 8px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .price-main {
-            font-size: 36px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
-
-        .price-original {
-            font-size: 14px;
-            opacity: 0.8;
-            text-decoration: line-through;
-            margin-bottom: 12px;
-        }
-
-        .discount-badge {
-            display: inline-block;
-            background: #ff6b2c;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        /* Vacantes */
-        .vacancies {
-            background: #fff8f5;
-            padding: 16px;
-            border-radius: 8px;
-            margin-bottom: 24px;
-            border: 2px solid #ff6b2c;
-        }
-
-        .vacancy-label {
-            font-size: 12px;
-            color: #ff6b2c;
-            text-transform: uppercase;
-            font-weight: 600;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .vacancy-number {
-            font-size: 28px;
-            font-weight: 700;
-            color: #ff6b2c;
-        }
-
-        .vacancy-text {
-            font-size: 13px;
-            color: #666;
-            margin-top: 4px;
-        }
-
-        /* Características */
-        .features {
-            margin-bottom: 24px;
-        }
-
-        .features-title {
-            font-size: 14px;
-            font-weight: 700;
-            color: #0f4c2f;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .feature-list {
-            list-style: none;
-        }
-
-        .feature-list li {
-            padding: 8px 0;
-            font-size: 14px;
-            color: #333;
-            padding-left: 24px;
-            position: relative;
-        }
-
-        .feature-list li:before {
-            content: "✓";
-            position: absolute;
-            left: 0;
-            color: #1a8f4f;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        /* Módulos del temario */
-        .module-item {
-            background: #f5f9f7;
-            border-left: 4px solid #1a8f4f;
-            padding: 16px;
-            margin-bottom: 12px;
-            border-radius: 6px;
-        }
-
-        .module-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-
-        .module-number {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #1a8f4f 0%, #0f4c2f 100%);
-            color: white;
-            border-radius: 50%;
-            font-weight: 700;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
-
-        .module-number:has-text("+") {
-            background: linear-gradient(135deg, #ff6b2c 0%, #ff8c3a 100%);
-            font-size: 20px;
-            font-weight: 600;
-        }
-
-        .module-complementary {
-            border-left-color: #ff6b2c !important;
-            background: linear-gradient(135deg, #fff8f5 0%, #fff0ea 100%) !important;
-        }
-
-        .module-plus {
-            background: linear-gradient(135deg, #ff6b2c 0%, #ff8c3a 100%) !important;
-            font-size: 18px;
-            font-weight: 600;
-        }
-
-        .module-title {
-            font-weight: 600;
-            color: #0f4c2f;
-            font-size: 15px;
-        }
-
-        .module-tools {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .tool-badge {
-            display: inline-block;
-            background: white;
-            color: #0f4c2f;
-            padding: 6px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 500;
-            border: 1px solid #1a8f4f;
-            white-space: nowrap;
-        }
-
-        .course-outcome {
-            background: linear-gradient(135deg, #fff8f5 0%, #fff0ea 100%);
-            border: 2px solid #ff6b2c;
-            border-radius: 8px;
-            padding: 16px;
-            margin-top: 16px;
-            font-size: 14px;
-            color: #333;
-            line-height: 1.5;
-        }
-
-        .course-outcome strong {
-            color: #ff6b2c;
-        }
-
-        /* Testimonios */
-        .testimonials-section {
-            margin: 28px 0;
-            padding-top: 24px;
-            border-top: 2px solid #e8f0ed;
-        }
-
-        .testimonial-item {
-            background: linear-gradient(135deg, #f5f9f7 0%, #eef7f3 100%);
-            border-left: 4px solid #1a8f4f;
-            padding: 16px;
-            margin-bottom: 12px;
-            border-radius: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 12px;
-        }
-
-        .testimonial-header {
-            flex: 1;
-        }
-
-        .testimonial-header p {
-            margin: 0;
-            font-size: 14px;
-            line-height: 1.5;
-            color: #333;
-        }
-
-        .testimonial-header p:first-child {
-            color: #0f4c2f;
-            font-weight: 600;
-        }
-
-        .testimonial-icon {
-            font-size: 24px;
-            flex-shrink: 0;
-            opacity: 0.7;
-        }
-
-        /* CTA Button */
-        .cta-button {
-            display: block;
-            background: linear-gradient(135deg, #1a8f4f 0%, #0f4c2f 100%);
-            color: white;
-            padding: 16px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 16px;
-            box-shadow: 0 4px 12px rgba(15, 76, 47, 0.3);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(15, 76, 47, 0.4);
-            background: linear-gradient(135deg, #0f4c2f 0%, #062d1f 100%);
-        }
-
-        .cta-button:active {
-            transform: translateY(0);
-        }
-
-        /* Footer CTA */
-        .footer-cta {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .whatsapp-button {
-            display: inline-block;
-            background: #25d366;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 14px;
-            transition: background 0.3s ease;
-        }
-
-        .whatsapp-button:hover {
-            background: #1ca752;
-        }
-
-        /* Responsive */
-        @media (max-width: 500px) {
-            .card {
-                padding: 20px;
-            }
-
-            .course-title {
-                font-size: 24px;
-            }
-
-            .details-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .price-main {
-                font-size: 32px;
-            }
-
-            .alert-banner {
-                padding: 12px;
-            }
-
-            .alert-banner h2 {
-                font-size: 16px;
-            }
-        }
-
-        /* Fade in animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .card {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        .alert-banner {
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        /* Trust indicators */
-        .trust-section {
-            background: #f5f9f7;
-            padding: 16px;
-            border-radius: 8px;
-            font-size: 13px;
-            color: #666;
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .instructor-info {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-
-        .instructor-badge {
-            background: white;
-            padding: 4px 12px;
-            border-radius: 4px;
-            font-weight: 600;
-            color: #0f4c2f;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GeoForest Tools – Geomatica Ambiental</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --navy:#0B2545; --navy-mid:#1B3D6E;
+    --blue:#1565C0; --blue-light:#1E88E5;
+    --green:#1B7A4A; --green-mid:#2E9E62; --green-light:#43C87D;
+    --amber:#F4B400; --orange:#E65100;
+    --off-white:#F8FAFB; --gray-100:#F1F3F4;
+    --gray-200:#D2D6DB; --gray-500:#6B7280; --text:#0D1B2A;
+  }
+  body{font-family:'Inter',sans-serif;background:#fff;color:var(--text);width:794px;margin:0 auto;}
+
+  /* HERO */
+  .hero{background:var(--navy);position:relative;overflow:hidden;}
+  .stripe{height:6px;background:linear-gradient(90deg,#43C87D 0%,#1E88E5 40%,#1B3D6E 100%);}
+  .hero-inner{padding:32px 44px 28px;position:relative;z-index:2;}
+  .logo-row{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+  .logo-box{background:rgba(255,255,255,0.92);border-radius:10px;padding:6px 12px;}
+  .logo-box img{height:50px;width:auto;display:block;}
+  .badge-live{margin-left:auto;background:var(--amber);color:#1A1200;font-size:11px;font-weight:700;padding:5px 13px;border-radius:20px;letter-spacing:.8px;text-transform:uppercase;}
+  .eyebrow{font-size:11px;font-weight:600;color:#43C87D;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+  .hero-title{font-size:28px;font-weight:900;line-height:1.18;color:#fff;max-width:560px;}
+  .hero-title span{color:#43C87D;}
+  .hero-sub{font-size:13px;color:rgba(255,255,255,.62);margin-top:8px;max-width:480px;line-height:1.6;}
+  .tool-row{display:flex;align-items:center;gap:14px;margin-top:20px;flex-wrap:wrap;}
+  .tool-pill{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:7px 14px;display:flex;align-items:center;gap:7px;}
+  .tpl{font-size:12px;font-weight:600;color:#fff;}
+  .tps{font-size:10px;color:rgba(255,255,255,.5);}
+  .tp-plus{font-size:20px;font-weight:300;color:rgba(255,255,255,.35);}
+  .hero-glow{position:absolute;right:-50px;top:-30px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(30,136,229,.14) 0%,transparent 70%);z-index:1;}
+  .hero-glow2{position:absolute;right:90px;bottom:-50px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(67,200,125,.1) 0%,transparent 70%);z-index:1;}
+
+  /* PROMO */
+  .promo{background:#D84315;padding:13px 44px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .promo-txt{font-size:13px;font-weight:700;color:#fff;}
+  .promo-txt span{color:#FFCCBC;}
+  .promo-dead{font-size:10px;color:rgba(255,255,255,.75);margin-top:2px;}
+  .price-block{display:flex;gap:18px;align-items:center;}
+  .pi{text-align:center;}
+  .pi-lbl{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;}
+  .promo-lbl{color:#FFCCBC;} .normal-lbl{color:rgba(255,255,255,.45);}
+  .pi-main{font-size:22px;font-weight:900;color:#fff;line-height:1;}
+  .pi-sub{font-size:11px;color:rgba(255,255,255,.65);margin-top:3px;}
+  .pi-main-sm{font-size:15px;font-weight:700;text-decoration:line-through;color:rgba(255,255,255,.38);line-height:1;}
+  .pi-sub-sm{font-size:10px;color:rgba(255,255,255,.28);margin-top:3px;}
+  .p-arrow{font-size:16px;color:rgba(255,255,255,.4);}
+
+  /* MAIN */
+  .main{padding:32px 44px;}
+
+  /* DATES */
+  .dates{display:flex;gap:10px;margin-bottom:28px;}
+  .dc{flex:1;background:var(--navy);border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:12px;}
+  .dc-icon{width:38px;height:38px;border-radius:8px;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .dc-icon svg{width:20px;height:20px;stroke:#43C87D;fill:none;stroke-width:1.8;}
+  .dc-meta{font-size:9px;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
+  .dc-val{font-size:15px;font-weight:700;color:#fff;line-height:1.2;}
+  .dc-sub{font-size:10px;color:rgba(255,255,255,.5);margin-top:2px;}
+
+  /* SECTION TITLE */
+  .sec{font-size:10px;font-weight:700;color:var(--green-mid);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+  .sec::after{content:'';flex:1;height:1px;background:var(--gray-200);}
+
+  /* MODULES */
+  .mgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:26px;}
+  .mc{border:1px solid var(--gray-200);border-radius:10px;padding:13px 15px;background:var(--off-white);position:relative;overflow:hidden;}
+  .mc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;border-radius:3px 0 0 3px;}
+  .mc.d1::before{background:#1E88E5;} .mc.d2::before{background:#43C87D;} .mc.d3::before{background:#F4B400;}
+  .md{font-size:9px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:3px;}
+  .mc.d1 .md{color:#1E88E5;} .mc.d2 .md{color:#1B7A4A;} .mc.d3 .md{color:#B45309;}
+  .mt{font-size:12px;font-weight:700;color:var(--text);margin-bottom:7px;line-height:1.3;}
+  .ml{list-style:none;}
+  .ml li{font-size:10.5px;color:var(--gray-500);padding:2px 0;display:flex;align-items:flex-start;gap:5px;line-height:1.4;}
+  .ml li::before{content:'›';color:var(--green-mid);font-weight:700;font-size:13px;flex-shrink:0;line-height:1.3;}
+
+  /* PLUGIN SECTION */
+  .plugin-sec{background:var(--navy);border-radius:12px;padding:22px 26px;margin-bottom:26px;}
+  .ph{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+  .plogo{width:46px;height:46px;border-radius:10px;background:rgba(67,200,125,.14);border:1px solid rgba(67,200,125,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .plogo svg{width:26px;height:26px;}
+  .pname{font-size:18px;font-weight:800;color:#fff;} .pname span{color:#43C87D;}
+  .pver{font-size:10px;color:rgba(255,255,255,.4);margin-top:1px;}
+  .pown{margin-left:auto;background:rgba(67,200,125,.14);border:1px solid rgba(67,200,125,.3);border-radius:20px;padding:3px 11px;font-size:9px;font-weight:700;color:#43C87D;letter-spacing:.5px;text-transform:uppercase;}
+  .pfeats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;}
+  .pf{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:8px;padding:11px 13px;}
+  .pft{font-size:11px;font-weight:600;color:#fff;margin-bottom:3px;line-height:1.3;}
+  .pfd{font-size:10px;color:rgba(255,255,255,.42);line-height:1.4;}
+
+  /* TOOLS TABLE */
+  .tools-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:26px;}
+  .tool-card{background:var(--off-white);border:1px solid var(--gray-200);border-radius:8px;padding:10px 11px;}
+  .tc-group{font-size:8px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px;}
+  .tc-g-mon{color:#1565C0;} .tc-g-bio{color:#1B7A4A;} .tc-g-inc{color:#BF360C;} .tc-g-alt{color:#6A1B9A;} .tc-g-cob{color:#00695C;} .tc-g-her{color:#455A64;}
+  .tc-name{font-size:10.5px;font-weight:600;color:var(--text);line-height:1.3;margin-bottom:2px;}
+  .tc-desc{font-size:9.5px;color:var(--gray-500);line-height:1.4;}
+
+  /* DATA */
+  .data-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:26px;}
+  .dcard{border:1px solid var(--gray-200);border-radius:10px;padding:14px 16px;background:var(--off-white);}
+  .dct{font-size:11px;font-weight:700;color:var(--navy);margin-bottom:9px;display:flex;align-items:center;gap:6px;}
+  .dtag{font-size:8px;padding:2px 7px;border-radius:10px;font-weight:600;letter-spacing:.3px;text-transform:uppercase;}
+  .tag-b{background:#E3F2FD;color:#1565C0;} .tag-g{background:#E8F5E9;color:#1B5E20;}
+  .tag-a{background:#FFF3E0;color:#E65100;} .tag-p{background:#EDE7F6;color:#4527A0;}
+  .dlist{list-style:none;}
+  .dlist li{font-size:10.5px;color:var(--gray-500);padding:3px 0;display:flex;align-items:center;gap:6px;border-bottom:1px solid var(--gray-200);}
+  .dlist li:last-child{border-bottom:none;}
+  .dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
+  .db{background:#1E88E5;} .dg{background:#43C87D;} .da{background:#F4B400;} .dp{background:#7B1FA2;}
+
+  /* BENEFITS */
+  .bens{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:26px;}
+  .ben{background:var(--off-white);border:1px solid var(--gray-200);border-radius:10px;padding:14px 12px;text-align:center;}
+  .bicon{width:38px;height:38px;margin:0 auto 9px;border-radius:10px;display:flex;align-items:center;justify-content:center;}
+  .bicon svg{width:20px;height:20px;stroke-width:1.8;fill:none;}
+  .bb{background:#E3F2FD;} .bb svg{stroke:#1565C0;}
+  .bg{background:#E8F5E9;} .bg svg{stroke:#1B7A4A;}
+  .ba{background:#FFF8E1;} .ba svg{stroke:#B45309;}
+  .bn{background:#E8EAF6;} .bn svg{stroke:#283593;}
+  .bc{background:#FBE9E7;} .bc svg{stroke:#BF360C;}
+  .bt{background:#E0F2F1;} .bt svg{stroke:#00695C;}
+  .btit{font-size:11px;font-weight:700;color:var(--text);margin-bottom:3px;line-height:1.3;}
+  .bdsc{font-size:9.5px;color:var(--gray-500);line-height:1.5;}
+
+  /* CERT */
+  .cert{background:var(--navy);border-radius:12px;padding:18px 26px;display:flex;align-items:center;gap:18px;margin-bottom:26px;}
+  .cseal{width:60px;height:60px;border-radius:50%;border:2px solid #43C87D;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .cseal svg{width:30px;height:30px;stroke:#43C87D;fill:none;stroke-width:1.8;}
+  .ctxt .ctit{font-size:15px;font-weight:800;color:#fff;margin-bottom:3px;}
+  .ctxt .cdsc{font-size:11px;color:rgba(255,255,255,.55);line-height:1.5;}
+  .chours{text-align:center;background:rgba(67,200,125,.13);border:1px solid rgba(67,200,125,.3);border-radius:10px;padding:11px 18px;flex-shrink:0;}
+  .cnum{font-size:30px;font-weight:900;color:#43C87D;line-height:1;}
+  .clbl{font-size:9px;color:rgba(255,255,255,.5);letter-spacing:.5px;text-transform:uppercase;margin-top:2px;}
+
+  /* INSTRUCTOR */
+  .instr{display:flex;align-items:center;gap:18px;background:var(--off-white);border:1px solid var(--gray-200);border-radius:12px;padding:18px 22px;margin-bottom:26px;}
+  .iav{width:60px;height:60px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#43C87D;flex-shrink:0;border:2px solid var(--gray-200);}
+  .iinf h3{font-size:14px;font-weight:700;color:var(--text);margin-bottom:2px;}
+  .iinf .role{font-size:11px;color:var(--blue-light);font-weight:500;margin-bottom:5px;}
+  .iinf p{font-size:10.5px;color:var(--gray-500);line-height:1.5;}
+
+  /* FOOTER */
+  .footer{background:var(--navy);border-radius:12px;padding:22px 26px;display:flex;align-items:center;justify-content:space-between;gap:18px;}
+  .fc h4{font-size:14px;font-weight:700;color:#fff;margin-bottom:8px;}
+  .ci{display:flex;flex-direction:column;gap:4px;}
+  .citem{display:flex;align-items:center;gap:7px;font-size:11px;color:rgba(255,255,255,.62);}
+  .citem svg{width:13px;height:13px;stroke:#43C87D;fill:none;stroke-width:2;flex-shrink:0;}
+  .fcta{text-align:right;}
+  .price-box{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:13px 18px;text-align:center;margin-bottom:11px;}
+  .pb-main{font-size:26px;font-weight:900;color:#43C87D;line-height:1;}
+  .pb-usd{font-size:11px;color:rgba(255,255,255,.5);margin-top:3px;}
+  .pb-div{height:1px;background:rgba(255,255,255,.1);margin:7px 0;}
+  .pb-reg{font-size:9px;color:rgba(255,255,255,.28);text-transform:uppercase;letter-spacing:.5px;}
+  .btn-reg{display:block;background:linear-gradient(135deg,#43C87D 0%,#2E9E62 100%);color:#042C18;font-size:12px;font-weight:800;padding:13px 18px;border-radius:9px;text-decoration:none;text-align:center;border:2px solid rgba(255,255,255,.22);box-shadow:0 2px 10px rgba(67,200,125,.28);}
+  .btn-reg .brl{font-size:15px;margin-bottom:2px;}
+  .btn-reg .brs{font-size:9px;font-weight:600;color:rgba(0,40,20,.65);text-transform:uppercase;letter-spacing:.7px;}
+  .socials{display:flex;gap:10px;justify-content:flex-end;margin-top:10px;}
+  .sitem{font-size:10px;color:rgba(255,255,255,.38);display:flex;align-items:center;gap:3px;}
+  .sitem svg{width:12px;height:12px;stroke:rgba(255,255,255,.35);fill:none;stroke-width:2;}
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- Banner de urgencia -->
-        <div class="alert-banner">
-            <h2>⏰ Últimas vacantes disponibles</h2>
-            <p>Inscripción cierra el 27 de junio</p>
-            <div class="countdown">Faltan 8 días</div>
-        </div>
 
-        <!-- Tarjeta principal -->
-        <div class="card">
-            <h1 class="course-title">Monitoreo Forestal, Biodiversidad y Cambio de Cobertura</h1>
-            <p class="course-subtitle">Especialización con GeoForest Tools en QGIS + Google Earth Engine</p>
-
-            <!-- Grid de detalles -->
-            <div class="details-grid">
-                <div class="detail-item">
-                    <div class="detail-icon">📅</div>
-                    <div class="detail-label">Fechas</div>
-                    <div class="detail-value">1, 2, 3 Julio</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-icon">🕐</div>
-                    <div class="detail-label">Horario</div>
-                    <div class="detail-value">18:00 - 21:00 PE</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-icon">💻</div>
-                    <div class="detail-label">Modalidad</div>
-                    <div class="detail-value">Virtual en vivo</div>
-                </div>
-                <div class="detail-item">
-                    <div class="detail-icon">📚</div>
-                    <div class="detail-label">Duración</div>
-                    <div class="detail-value">40 horas lectivas</div>
-                </div>
-            </div>
-
-            <!-- Precio especial -->
-            <div class="pricing-section">
-                <div class="pricing-label">Precio de Lanzamiento</div>
-                <div class="price-main">S/ 100 / USD 35</div>
-                <div class="price-original">Precio regular: S/ 200 / USD 70</div>
-                <div class="discount-badge">50% de descuento</div>
-            </div>
-
-            <!-- Vacantes -->
-            <div class="vacancies">
-                <div class="vacancy-label">⚠️ Vacantes Disponibles</div>
-                <div class="vacancy-number">10</div>
-                <div class="vacancy-text">De 30 cupos totales. La demanda es alta.</div>
-            </div>
-
-            <!-- Temario detallado -->
-            <div class="features">
-                <div class="features-title">📋 Temario Detallado (4 Módulos)</div>
-                
-                <div class="module-item">
-                    <div class="module-header">
-                        <span class="module-number">M1</span>
-                        <span class="module-title">Dinámica de Cobertura Terrestre</span>
-                    </div>
-                    <div class="module-tools">
-                        <span class="tool-badge">Dinámica cobertura mundial S2</span>
-                        <span class="tool-badge">MapBiomas cobertura Perú C3</span>
-                        <span class="tool-badge">Cambio global 2000-2020</span>
-                        <span class="tool-badge">Análisis Global Forest Watch</span>
-                    </div>
-                </div>
-
-                <div class="module-item">
-                    <div class="module-header">
-                        <span class="module-number">M2</span>
-                        <span class="module-title">Deforestación, Incendios y Perturbaciones</span>
-                    </div>
-                    <div class="module-tools">
-                        <span class="tool-badge">Monitoreo GEOBOSQUES Perú</span>
-                        <span class="tool-badge">Puntos activos Incendio (FIRMS)</span>
-                        <span class="tool-badge">Monitoreo MapBiomas Incendios</span>
-                        <span class="tool-badge">Áreas Quemadas FireCCI ESA</span>
-                        <span class="tool-badge">Alerta temprana GLAD-L/S2/S1</span>
-                    </div>
-                </div>
-
-                <div class="module-item">
-                    <div class="module-header">
-                        <span class="module-number">M3</span>
-                        <span class="module-title">Altura Forestal y Estructura Vertical</span>
-                    </div>
-                    <div class="module-tools">
-                        <span class="tool-badge">ETH Sentinel2 - Altura 2020</span>
-                        <span class="tool-badge">GEDI L2A - Altura Forestal</span>
-                        <span class="tool-badge">GLAD - Altura Dosel 2000-2020</span>
-                        <span class="tool-badge">Meta 1m - Altura Dosel</span>
-                        <span class="tool-badge">Planet NICFI - Amazonía</span>
-                        <span class="tool-badge">GEDI L2B - Estructura Vertical</span>
-                    </div>
-                </div>
-
-                <div class="module-item">
-                    <div class="module-header">
-                        <span class="module-number">M4</span>
-                        <span class="module-title">Biomasa, Carbono y Biodiversidad</span>
-                    </div>
-                    <div class="module-tools">
-                        <span class="tool-badge">CITREES - Biomasa 100m</span>
-                        <span class="tool-badge">ESA - Biomasa y Carbono 100m</span>
-                        <span class="tool-badge">GEDI L4A AGBD - Densidad aérea</span>
-                        <span class="tool-badge">GEDI L4B - Biomasa Aérea 1km</span>
-                        <span class="tool-badge">GFW - Carbono Flujo 30m</span>
-                        <span class="tool-badge">GBIF - Ocurrencias Especies</span>
-                    </div>
-                </div>
-
-                <div class="module-item module-complementary">
-                    <div class="module-header">
-                        <span class="module-number module-plus">+</span>
-                        <span class="module-title">Herramientas Complementarias</span>
-                    </div>
-                    <div class="module-tools">
-                        <span class="tool-badge">Generador de Reportes Local</span>
-                        <span class="tool-badge">Exportación de gráficos</span>
-                        <span class="tool-badge">Automatización de flujos</span>
-                    </div>
-                </div>
-
-                <div class="course-outcome">
-                    <strong>Dominarás:</strong> 30+ datasets de monitoreo forestal integrados en QGIS • Automatización con GeoForest Tools • Reportes dinámicos con Earth Engine • Análisis multitemporal de cobertura, biomasa y carbono • Identificación de alertas tempranas
-                </div>
-            </div>
-
-            <!-- CTA Principal -->
-            <a href="https://ninobravo55.github.io/geoforest-inscripcion/" class="cta-button">
-                🚀 Inscríbete Ahora
-            </a>
-
-            <!-- Testimonios / Casos de Uso -->
-            <div class="testimonials-section">
-                <div class="features-title">¿Por qué eligen este curso?</div>
-                
-                <div class="testimonial-item">
-                    <div class="testimonial-header">
-                        <div class="testimonial-text">
-                            <p><strong>"Automaticé análisis que antes tomaban 3 semanas en 2 días"</strong></p>
-                            <p style="font-size: 13px; color: #666; margin-top: 4px;">Consultor SIG - Evaluación Ambiental</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-icon">⚡</div>
-                </div>
-
-                <div class="testimonial-item">
-                    <div class="testimonial-header">
-                        <div class="testimonial-text">
-                            <p><strong>"Ahora genero reportes de monitoreo forestal con datos en tiempo real"</strong></p>
-                            <p style="font-size: 13px; color: #666; margin-top: 4px;">Especialista en Hidrología - Proyecto de Agua</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-icon">🌳</div>
-                </div>
-
-                <div class="testimonial-item">
-                    <div class="testimonial-header">
-                        <div class="testimonial-text">
-                            <p><strong>"Entendí cómo integrar Google Earth Engine en mis flujos de trabajo"</strong></p>
-                            <p style="font-size: 13px; color: #666; margin-top: 4px;">Investigador - Universidad</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-icon">🛰️</div>
-                </div>
-            </div>
-
-            <!-- Indicadores de confianza -->
-            <div class="trust-section">
-                <div class="instructor-info">
-                    <span class="instructor-badge">Ing. Nino Bravo Morales</span>
-                </div>
-                <p>Especialista en Geomática y Teledetección con experiencia en proyectos ambientales</p>
-                <p style="margin-top: 8px; font-size: 12px;">✓ Certificado digital verificable</p>
-            </div>
-        </div>
-
-        <!-- Footer con contacto -->
-        <div class="footer-cta">
-            <p style="font-size: 13px; color: white; margin-bottom: 12px;">¿Dudas o preguntas?</p>
-            <a href="https://wa.me/51999999999?text=Hola%20Nino%2C%20me%20interesa%20el%20curso%20de%20GeoForest%20Tools" class="whatsapp-button">
-                💬 Contáctame por WhatsApp
-            </a>
-        </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="stripe"></div>
+  <div class="hero-glow"></div><div class="hero-glow2"></div>
+  <div class="hero-inner">
+    <div class="logo-row">
+      <div class="logo-box">
+        <img src="data:image/png;base64,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" alt="Geomatica Ambiental" />
+      </div>
+      <span class="badge-live">EN VIVO · 3 DÍAS</span>
     </div>
+    <p class="eyebrow">Curso especializado</p>
+    <h1 class="hero-title">
+      Monitoreo Forestal, Biodiversidad<br>
+      y Cambio de Cobertura mediante<br>
+      el plugin <span>GeoForest Tools</span> en QGIS
+    </h1>
+    <p class="hero-sub">
+      Conecta QGIS con Google Earth Engine para procesar datos satelitales masivos en la nube: deforestación, biomasa, altura forestal, incendios y biodiversidad.
+    </p>
+    <div class="tool-row">
+      <div class="tool-pill">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#43C87D" stroke-width="1.8"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M8 12l3 3 5-6" stroke="#43C87D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><div class="tpl">GeoForest Tools</div><div class="tps">Plugin QGIS v2.0.9</div></div>
+      </div>
+      <span class="tp-plus">+</span>
+      <div class="tool-pill">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#1E88E5" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+        <div><div class="tpl">Google Earth Engine</div><div class="tps">Procesamiento en la nube</div></div>
+      </div>
+      <span class="tp-plus">+</span>
+      <div class="tool-pill">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#F4B400" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        <div><div class="tpl">QGIS 3.28+</div><div class="tps">Entorno de trabajo</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO BANNER -->
+<div class="promo">
+  <div>
+    <div class="promo-txt">🔥 Precio de lanzamiento <span>hasta el 29 de junio</span></div>
+    <div class="promo-dead">A partir del 30 de junio sube a precio regular · Vacantes limitados</div>
+  </div>
+  <div class="price-block">
+    <div class="pi">
+      <div class="pi-lbl promo-lbl">Promocional</div>
+      <div class="pi-main">S/ 100</div>
+      <div class="pi-sub">USD $35</div>
+    </div>
+    <div class="p-arrow">→</div>
+    <div class="pi">
+      <div class="pi-lbl normal-lbl">Precio regular</div>
+      <div class="pi-main-sm">S/ 200</div>
+      <div class="pi-sub-sm">USD $70</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- DATES -->
+  <div class="dates">
+    <div class="dc">
+      <div class="dc-icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+      <div><div class="dc-meta">Fechas</div><div class="dc-val">01, 02 y 03 de Julio</div><div class="dc-sub">2026 · 3 días intensivos</div></div>
+    </div>
+    <div class="dc">
+      <div class="dc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+      <div><div class="dc-meta">Horario</div><div class="dc-val">18:00 – 21:00</div><div class="dc-sub">Hora Perú (GMT-5)</div></div>
+    </div>
+    <div class="dc">
+      <div class="dc-icon"><svg viewBox="0 0 24 24"><path d="M15 10l-4 4 4 4M9 18V6"/></svg></div>
+      <div><div class="dc-meta">Modalidad</div><div class="dc-val">Virtual · Google Meet</div><div class="dc-sub">Grabación incluida · Acceso permanente</div></div>
+    </div>
+  </div>
+
+  <!-- MODULES -->
+  <p class="sec">Contenido del curso · 3 días</p>
+  <div class="mgrid">
+
+    <div class="mc d1">
+      <div class="md">Día 1 · 01 Jul · Monitoreo de bosques</div>
+      <div class="mt">Deforestación y cambio de cobertura</div>
+      <ul class="ml">
+        <li>Configuración GEE y autenticación en QGIS</li>
+        <li>GEOBOSQUES Perú – pérdida de bosque oficial MINAM</li>
+        <li>Global Forest Watch (GFW) – Hansen UMD · 2000–2024</li>
+        <li>GLCLUC 2000–2020 – cambio global de cobertura GLAD/UMD</li>
+        <li>Vectorización, estadísticas y gráficos automáticos</li>
+        <li>Exportación a Google Drive / descarga directa</li>
+      </ul>
+    </div>
+
+    <div class="mc d1">
+      <div class="md">Día 1 · continuación</div>
+      <div class="mt">Alertas de perturbación y cobertura dinámica</div>
+      <ul class="ml">
+        <li>Alertas tempranas GLAD-L (Landsat 30m) · actualización ~8 días</li>
+        <li>Alertas GLAD-S2 (Sentinel-2 10m) · alta resolución Amazonía</li>
+        <li>GLAD-S1 (SAR) – penetración nubosidad tropical</li>
+        <li>Dynamic World S2 – cobertura 10m casi en tiempo real</li>
+        <li>MapBiomas Perú C3 – cobertura anual 1985–2024 · 30m</li>
+        <li>MapBiomas Fuego – cicatrices de quema históricas</li>
+      </ul>
+    </div>
+
+    <div class="mc d2">
+      <div class="md">Día 2 · 02 Jul · Biomasa y carbono</div>
+      <div class="mt">Estimación de biomasa aérea forestal</div>
+      <ul class="ml">
+        <li>GEDI L4A – densidad de biomasa aérea por footprint</li>
+        <li>GEDI L4B – biomasa aérea media 1 km (2019–2021)</li>
+        <li>ESA AGB – biomasa y carbono global 100m</li>
+        <li>CTrees AGB – biomasa global 100m · 2000–2025 · DenseNet</li>
+        <li>GFW Carbon Flux 30m – emisiones y remociones de CO₂</li>
+        <li>Densidad de madera (g/cm³) – Sudamérica tropical</li>
+      </ul>
+    </div>
+
+    <div class="mc d2">
+      <div class="md">Día 2 · continuación · Altura forestal</div>
+      <div class="mt">Estructura vertical del dosel</div>
+      <ul class="ml">
+        <li>GEDI L2A – altura forestal por puntos láser spaceborne</li>
+        <li>GEDI L2B – estructura vertical y métricas de cobertura</li>
+        <li>GLAD – altura de dosel 2000–2020 · 30m global</li>
+        <li>ETH Sentinel-2 – altura de dosel 2020 · 10m</li>
+        <li>Meta 1m – altura de dosel 2018–2020 · Amazonía</li>
+        <li>Planet NICFI – altura dosel Amazonía · alta resolución</li>
+      </ul>
+    </div>
+
+    <div class="mc d3">
+      <div class="md">Día 3 · 03 Jul · Incendios y biodiversidad</div>
+      <div class="mt">Monitoreo de incendios forestales</div>
+      <ul class="ml">
+        <li>Puntos activos de incendio FIRMS (MODIS + VIIRS)</li>
+        <li>Áreas quemadas FireCCI ESA – cicatrices anuales globales</li>
+        <li>MapBiomas Fuego – historial de quemas 1985–2024</li>
+        <li>Análisis de recurrencia y área acumulada quemada</li>
+        <li>Exportación de capas y gráficos estadísticos</li>
+        <li>Integración con monitoreo forestal (deforestación + fuego)</li>
+      </ul>
+    </div>
+
+    <div class="mc d3">
+      <div class="md">Día 3 · continuación · Proyecto integrador</div>
+      <div class="mt">Biodiversidad y reporte final</div>
+      <ul class="ml">
+        <li>GBIF – ocurrencias de especies dentro del AOI</li>
+        <li>Filtros por taxón, año y tipo de observación</li>
+        <li>Generador de reportes y gráficos automatizados</li>
+        <li>Flujo completo: deforestación → biomasa → altura → fuego</li>
+        <li>Proyecto integrador: cuenca o área protegida completa</li>
+        <li>Presentación de resultados y discusión final</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- PLUGIN -->
+  <p class="sec">Plugin GeoForest Tools v2.0.9 · desarrollado por Geomatica Ambiental</p>
+  <div class="plugin-sec">
+    <div class="ph">
+      <div class="plogo">
+        <svg viewBox="0 0 24 24" fill="none" width="26" height="26">
+          <path d="M12 3C7 3 3 7 3 12s4 9 9 9 9-4 9-9-4-9-9-9z" fill="#43C87D" opacity=".2"/>
+          <path d="M7 12l3 3 7-7" stroke="#43C87D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="12" cy="12" r="9" stroke="#43C87D" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div>
+        <div class="pname"><span>GeoForest</span> Tools</div>
+        <div class="pver">v2.0.9 · QGIS 3.28 – 4.x · Python 3.x · GEE integrado</div>
+      </div>
+      <div class="pown">Plugin propio</div>
+    </div>
+    <div class="pfeats">
+      <div class="pf"><div class="pft">Monitoreo de bosques</div><div class="pfd">GEOBOSQUES, GFW Hansen, GLCLUC · estadísticas y gráficos automáticos</div></div>
+      <div class="pf"><div class="pft">Alertas de perturbación</div><div class="pfd">GLAD-L/S2/S1 · actualización ~8 días · detección temprana</div></div>
+      <div class="pf"><div class="pft">Biomasa y carbono</div><div class="pfd">GEDI L4A/L4B, ESA, CTrees, GFW Carbon Flux · Mg/ha y tCO₂/ha</div></div>
+      <div class="pf"><div class="pft">Altura forestal</div><div class="pfd">GEDI L2A/L2B, GLAD, ETH, Meta 1m, Planet NICFI · 1–30m res.</div></div>
+      <div class="pf"><div class="pft">Incendios forestales</div><div class="pfd">FIRMS, FireCCI ESA, MapBiomas Fuego · puntos activos y cicatrices</div></div>
+      <div class="pf"><div class="pft">Biodiversidad y reportes</div><div class="pfd">GBIF ocurrencias de especies + generador de reportes PDF/Excel</div></div>
+    </div>
+  </div>
+
+  <!-- TOOLS -->
+  <p class="sec">Herramientas del plugin · 22 algoritmos</p>
+  <div class="tools-grid">
+    <div class="tool-card"><div class="tc-group tc-g-mon">Monitoreo bosques</div><div class="tc-name">GEOBOSQUES Perú</div><div class="tc-desc">Pérdida forestal oficial MINAM · vectorización automática</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-mon">Monitoreo bosques</div><div class="tc-name">GFW – Global Forest Watch</div><div class="tc-desc">Hansen UMD · pérdida/ganancia 2000–2024 · 30m</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-mon">Monitoreo bosques</div><div class="tc-name">GLCLUC 2000–2020</div><div class="tc-desc">Cambio global cobertura y uso del suelo · GLAD UMD</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-cob">Dinámica cobertura</div><div class="tc-name">MapBiomas Perú C3</div><div class="tc-desc">Cobertura anual 1985–2024 · 30m · transiciones</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-cob">Dinámica cobertura</div><div class="tc-name">Dynamic World S2</div><div class="tc-desc">Cobertura NRT 10m · 9 clases · desde 2015</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-cob">Dinámica cobertura</div><div class="tc-name">MapBiomas Fuego</div><div class="tc-desc">Cicatrices quema histórica 1985–2024</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-mon">Alerta perturbación</div><div class="tc-name">GLAD-L / S2 / S1</div><div class="tc-desc">Alertas deforestación Landsat, Sentinel-2 y SAR</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-bio">Biomasa forestal</div><div class="tc-name">GEDI L4A – AGBD</div><div class="tc-desc">Densidad biomasa aérea por footprint spaceborne</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-bio">Biomasa forestal</div><div class="tc-name">GEDI L4B – AGBD 1km</div><div class="tc-desc">Superficie continua biomasa aérea media 1 km</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-bio">Biomasa forestal</div><div class="tc-name">ESA AGB 100m</div><div class="tc-desc">Biomasa y carbono almacenado global · ESA CCI</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-bio">Biomasa forestal</div><div class="tc-name">CTrees AGB 100m</div><div class="tc-desc">Biomasa global 2000–2025 · DenseNet · ALS ref.</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-bio">Biomasa forestal</div><div class="tc-name">GFW Carbon Flux 30m</div><div class="tc-desc">Emisiones y remociones CO₂ · Harris et al. 2021</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-bio">Biomasa forestal</div><div class="tc-name">Densidad de madera</div><div class="tc-desc">g/cm³ · Sudamérica tropical · 1 km</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-bio">Biomasa forestal</div><div class="tc-name">GEDI L2B Estructura</div><div class="tc-desc">Estructura vertical y métricas de cobertura dosel</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-alt">Altura forestal</div><div class="tc-name">GEDI L2A Altura</div><div class="tc-desc">Altura forestal por puntos láser spaceborne</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-alt">Altura forestal</div><div class="tc-name">GLAD Dosel 2000–2020</div><div class="tc-desc">Altura dosel global 30m · 20 años de cambio</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-alt">Altura forestal</div><div class="tc-name">ETH Sentinel-2 2020</div><div class="tc-desc">Altura dosel 10m · alta resolución espacial</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-alt">Altura forestal</div><div class="tc-name">Meta 1m · Planet NICFI</div><div class="tc-desc">Dosel Amazonía · 1m y alta resolución tropical</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-inc">Incendios</div><div class="tc-name">FIRMS – Puntos activos</div><div class="tc-desc">MODIS + VIIRS · detección activa de incendios</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-inc">Incendios</div><div class="tc-name">FireCCI ESA</div><div class="tc-desc">Áreas quemadas anuales globales · ESA CCI</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-her">Biodiversidad</div><div class="tc-name">GBIF Ocurrencias</div><div class="tc-desc">Registros de especies dentro del AOI · filtros taxón</div></div>
+    <div class="tool-card"><div class="tc-group tc-g-her">Herramientas</div><div class="tc-name">Generador de Reportes</div><div class="tc-desc">Reportes estadísticos y gráficos automáticos local</div></div>
+  </div>
+
+  <!-- BENEFITS -->
+  <p class="sec">Lo que obtienes</p>
+  <div class="bens">
+    <div class="ben"><div class="bicon bg"><svg viewBox="0 0 24 24"><path d="M4 20h16M4 20V10l8-7 8 7v10"/><path d="M9 20v-5h6v5"/></svg></div><div class="btit">Plugin GeoForest Tools</div><div class="bdsc">Acceso completo v2.0.9 con todas las actualizaciones futuras incluidas</div></div>
+    <div class="ben"><div class="bicon bb"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg></div><div class="btit">3 clases en vivo</div><div class="bdsc">Sesiones intensivas con interacción directa y resolución de dudas en tiempo real</div></div>
+    <div class="ben"><div class="bicon ba"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><div class="btit">Certificado 40 horas</div><div class="bdsc">Certificado digital de especialización con validación en línea</div></div>
+    <div class="ben"><div class="bicon bn"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg></div><div class="btit">Scripts y material</div><div class="bdsc">Datos de ejemplo, templates y fichas técnicas de cada herramienta</div></div>
+    <div class="ben"><div class="bicon bc"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><div class="btit">Soporte académico</div><div class="bdsc">Canal directo con el equipo docente para consultas técnicas post-curso</div></div>
+    <div class="ben"><div class="bicon bt"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="btit">Acceso de por vida</div><div class="bdsc">Grabaciones y material disponibles permanentemente · nuevas versiones del plugin</div></div>
+  </div>
+
+  <!-- CERT -->
+  <div class="cert">
+    <div class="cseal"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg></div>
+    <div class="ctxt">
+      <div class="ctit">Certificado digital de especialización</div>
+      <div class="cdsc">Emitido por Geomatica Ambiental S.R.L. · Válido con verificación en línea<br>Nota mínima de aprobación: 70 / 100 · Publicado en www.geomatica.pe/certificados</div>
+    </div>
+    <div class="chours"><div class="cnum">40</div><div class="clbl">Horas lectivas</div></div>
+  </div>
+
+  <!-- INSTRUCTOR -->
+  <p class="sec">Ponente</p>
+  <div class="instr">
+    <div class="iav">NB</div>
+    <div class="iinf">
+      <h3>Ing. Nino Bravo Morales</h3>
+      <div class="role">Especialista en Geomática · Desarrollador de GeoForest Tools y geeSWAT</div>
+      <p>Ingeniero en Recursos Naturales Renovables con mención Forestal · Egresado de Maestría en Agroecología y Gestión Ambiental (UNAS) · Más de 10 años de experiencia en teledetección y análisis forestal · Diplomado en SIG · Desarrollador de plugins propios para QGIS integrados con Google Earth Engine · Consultor y capacitador en R, ArcGIS, QGIS, ERDAS y GEE.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div class="fc">
+      <h4>Reserva tu cupo</h4>
+      <div class="ci">
+        <div class="citem"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>www.geomatica.pe</div>
+        <div class="citem"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>info@geomatica.pe</div>
+        <div class="citem"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.79a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .9h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>(+51) 995 664 488</div>
+      </div>
+    </div>
+    <div class="fcta">
+      <div style="font-size:10px;color:rgba(255,255,255,.4);margin-bottom:7px;text-align:right;">Precio de lanzamiento válido hasta el 29 de junio</div>
+      <div class="price-box">
+        <div class="pb-main">S/ 100</div>
+        <div class="pb-usd">USD $35</div>
+        <div class="pb-div"></div>
+        <div class="pb-reg">Regular: S/ 200 &nbsp;|&nbsp; USD $70</div>
+      </div>
+      <a href="https://forms.gle/BbrUdjDTsRNPD9t27" target="_blank" class="btn-reg">
+        <div class="brl">📋 Reservar mi cupo ahora</div>
+        <div class="brs">Envía tu voucher en este formulario</div>
+      </a>
+      <div class="socials">
+        <span class="sitem"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>@geomaticaambiental</span>
+        <span class="sitem"><svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>Geomatica Ambiental</span>
+      </div>
+    </div>
+  </div>
+
+</main>
 </body>
 </html>
